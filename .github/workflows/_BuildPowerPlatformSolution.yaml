@@ -41,6 +41,10 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+  actions: read
+
 env:
   ALGoOrgSettings: ${{ vars.ALGoOrgSettings }}
   ALGoRepoSettings: ${{ vars.ALGoRepoSettings }}
@@ -55,20 +59,20 @@ jobs:
     name: '${{ inputs.projectName }}'
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.checkoutRef }}
           lfs: true
 
       - name: Read settings
-        uses: microsoft/AL-Go-Actions/ReadSettings@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/ReadSettings@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
           get: type,powerPlatformSolutionFolder,appRevision,appBuild
 
       - name: Build
-        uses: microsoft/AL-Go-Actions/BuildPowerPlatform@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/BuildPowerPlatform@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: ${{ inputs.shell }}
           solutionFolder: ${{ inputs.project }}
@@ -79,7 +83,7 @@ jobs:
 
       - name: Calculate Artifact names
         id: calculateArtifactsNames
-        uses: microsoft/AL-Go-Actions/CalculateArtifactNames@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/CalculateArtifactNames@bf247f662e430b260701b13b6953849e0b2448a0
         if: success() || failure()
         with:
           shell: ${{ inputs.shell }}
@@ -88,7 +92,9 @@ jobs:
           suffix: ${{ inputs.artifactsNameSuffix }}
 
       - name: Publish artifacts - Power Platform Solution
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        env:
+          ACTIONS_RUNNER_DISABLE_NODE_MAGLEV: 1
         if: inputs.publishArtifacts
         with:
           name: ${{ steps.calculateArtifactsNames.outputs.PowerPlatformSolutionArtifactsName }}

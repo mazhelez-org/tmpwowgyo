@@ -34,11 +34,11 @@ jobs:
     name: Pull changes from ${{ inputs.environment }}
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Initialize the workflow
         id: init
-        uses: microsoft/AL-Go-Actions/WorkflowInitialize@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/WorkflowInitialize@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: pwsh
 
@@ -51,14 +51,14 @@ jobs:
           Add-Content -encoding utf8 -Path $env:GITHUB_ENV -Value "envName=$envName"
 
       - name: Read settings
-        uses: microsoft/AL-Go-Actions/ReadSettings@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/ReadSettings@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: pwsh
           get: powerPlatformSolutionFolder
 
       - name: Read secrets
         id: ReadSecrets
-        uses: microsoft/AL-Go-Actions/ReadSecrets@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/ReadSecrets@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: pwsh
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: microsoft/AL-Go-Actions/DetermineDeploymentEnvironments@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/DetermineDeploymentEnvironments@bf247f662e430b260701b13b6953849e0b2448a0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -89,7 +89,7 @@ jobs:
           Add-Content -encoding utf8 -Path $env:GITHUB_ENV -Value "solutionFolder=$solutionFolder"
 
       - name: Pull changes from Power Platform environment
-        uses: microsoft/AL-Go-Actions/PullPowerPlatformChanges@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/PullPowerPlatformChanges@bf247f662e430b260701b13b6953849e0b2448a0
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -102,7 +102,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: microsoft/AL-Go-Actions/WorkflowPostProcess@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/WorkflowPostProcess@bf247f662e430b260701b13b6953849e0b2448a0
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

@@ -2,8 +2,8 @@
   "PullRequestTrigger": "pull_request",
   "powerPlatformSolutionFolder": "WarehouseHelper",
   "type": "PTE",
-  "templateUrl": "https://github.com/Microsoft/al-go-pte@preview",
-  "templateSha": "8fedaa0bba2cf96f8b2b0c57b7d4ba88e9c7069b",
+  "templateUrl": "https://github.com/mazhelez-org/tmp3N4tJJ-PTE@main",
+  "templateSha": "64c6f88313a3c4ae31d19baaa9ea072429222651",
   "runs-on": "ubuntu-latest",
   "shell": "pwsh",
   "MicrosoftTelemetryConnectionString": ""

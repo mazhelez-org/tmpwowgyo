@@ -25,12 +25,12 @@ jobs:
     runs-on: [ ubuntu-latest ]
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: true
 
       - name: Troubleshooting
-        uses: microsoft/AL-Go-Actions/Troubleshooting@730ec581ee02e4b162d14983bd61cbd1c65afc14 # v7.1
+        uses: mazhelez-org/AL-Go/Actions/Troubleshooting@bf247f662e430b260701b13b6953849e0b2448a0
         with:
           shell: pwsh
           gitHubSecrets: ${{ toJson(secrets) }}
